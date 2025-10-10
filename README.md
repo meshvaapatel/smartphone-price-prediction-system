@@ -67,10 +67,10 @@ The project is structured into four main phases, mirroring a real-world data sci
 │   └── data_cleaning_extraction.ipynb      # Jupyter notebook for data cleaning & Feature Engineering
 ├── report/
     └── web_scraping_overview.md            # Overview document for the web scraping process
-├── flipkart_smartphones_cleaned.csv    # Cleaned data ready for model training
-├── model_train.py                      # Python script for model training and tuning
-├── random_forest_model.pkl             # Saved (pickled) trained model pipeline
-└── app.py                              # Main Streamlit application script
+├── flipkart_smartphones_cleaned.csv        # Cleaned data ready for model training
+├── model_train.py                          # Python script for model training and tuning
+├── random_forest_model.pkl                 # Saved (pickled) trained model pipeline
+└── app.py                                  # Main Streamlit application script
 
 ```
 
