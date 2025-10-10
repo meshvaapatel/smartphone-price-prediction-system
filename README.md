@@ -14,7 +14,7 @@ The final product is an interactive web application built with Streamlit, where 
 
 You can interact with the deployed model using the link below -
 
-**[➡️ Visit the Smartphone Price Predictor App](https://www.google.com/search?q=YOUR_APP_LINK_HERE)**
+**[➡️ Visit the Smartphone Price Predictor App]((https://smartphone-price-prediction-system-meshvapatel.streamlit.app/))**
 
 ---
 
