@@ -56,7 +56,6 @@ The project is structured into four main phases, mirroring a real-world data sci
 
 ```
 .
-├── .gitignore                              # Files to be ignored by Git
 ├── requirements.txt                        # Project dependencies
 ├── README.md                               # You are here!
 ├── data/
