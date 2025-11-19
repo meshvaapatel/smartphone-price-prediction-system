@@ -12,8 +12,6 @@ Steps:
 5. Perform RandomizedSearchCV for optimization
 6. Evaluate and save the best model
 
-Author: Meshva Patel
-Date: October 2025
 """
 
 # --- Imports ---
@@ -25,9 +23,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 import pickle
 
-# =========================================================
 # 1. Load the Cleaned Dataset
-# =========================================================
 try:
     df = pd.read_csv('flipkart_smartphones_cleaned.csv')
     print("✅ Data loaded successfully!")
@@ -36,9 +32,7 @@ except FileNotFoundError:
     print("Please ensure the dataset is in the same directory as this script or provide the full path.")
     exit()
 
-# =========================================================
 # 2. Select Final Features for Model Training
-# =========================================================
 # These features were selected based on domain understanding and exploratory data analysis.
 final_features = [
     'Brand', 'RAM_GB', 'ROM_GB', 'Display_Size_inch', 'Display_Type',
@@ -55,9 +49,7 @@ df_final.dropna(inplace=True)  # Ensure no missing values
 X = df_final[final_features]
 y = df_final['Price']
 
-# =========================================================
 # 3. Build a Preprocessing Pipeline
-# =========================================================
 # Separate categorical and numerical features for appropriate transformations
 categorical_features = X.select_dtypes(include=['object', 'category']).columns
 numerical_features = X.select_dtypes(include=['number']).columns
@@ -76,9 +68,7 @@ preprocessor = ColumnTransformer(
 )
 print("\n⚙️ Preprocessing pipeline created successfully!")
 
-# =========================================================
 # 4. Define Model and Hyperparameter Search Space
-# =========================================================
 # Random Forest chosen for its robustness and performance on tabular data
 rf_model = RandomForestRegressor(random_state=42, n_jobs=-1)
 
@@ -98,9 +88,7 @@ param_dist = {
     'regressor__max_features': ['sqrt', 'log2', 1.0]  # 1.0 means all features
 }
 
-# =========================================================
 # 5. Train-Test Split and Hyperparameter Tuning
-# =========================================================
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
@@ -127,9 +115,7 @@ random_search = RandomizedSearchCV(
 random_search.fit(X_train, y_train)
 print("\nHyperparameter tuning complete!")
 
-# =========================================================
 # 6. Evaluate the Best Model
-# =========================================================
 print("\n🏆 Best Parameters Found:")
 print(random_search.best_params_)
 
@@ -137,10 +123,7 @@ best_model = random_search.best_estimator_
 r2_score = best_model.score(X_test, y_test)
 print(f"\nBest Model R² Score on Test Data: {r2_score:.4f}")
 
-# =========================================================
 # 7. Save the Final Trained Model
-# =========================================================
-# save the trained pipeline for deployment.
 with open('random_forest_model.pkl', 'wb') as file:
     pickle.dump(best_model, file)   
 
