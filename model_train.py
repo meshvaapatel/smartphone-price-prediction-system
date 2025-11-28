@@ -26,14 +26,13 @@ import pickle
 # 1. Load the Cleaned Dataset
 try:
     df = pd.read_csv('flipkart_smartphones_cleaned.csv')
-    print("✅ Data loaded successfully!")
+    print("Data loaded successfully!")
 except FileNotFoundError:
-    print("❌ Error: 'flipkart_smartphones_cleaned.csv' not found.")
+    print("Error: 'flipkart_smartphones_cleaned.csv' not found.")
     print("Please ensure the dataset is in the same directory as this script or provide the full path.")
     exit()
 
 # 2. Select Final Features for Model Training
-# These features were selected based on domain understanding and exploratory data analysis.
 final_features = [
     'Brand', 'RAM_GB', 'ROM_GB', 'Display_Size_inch', 'Display_Type',
     'Battery_mAh', 'Processor', 'Warranty_Years'
@@ -43,14 +42,12 @@ print(f"\nUsing final features for training: {final_features}")
 
 # Keep only selected features + target variable
 df_final = df[final_features + ['Price']].copy()
-df_final.dropna(inplace=True)  # Ensure no missing values
+df_final.dropna(inplace=True)  
 
-# Define feature matrix (X) and target vector (y)
 X = df_final[final_features]
 y = df_final['Price']
 
 # 3. Build a Preprocessing Pipeline
-# Separate categorical and numerical features for appropriate transformations
 categorical_features = X.select_dtypes(include=['object', 'category']).columns
 numerical_features = X.select_dtypes(include=['number']).columns
 
@@ -58,18 +55,15 @@ print(f"\nIdentified Categorical Features: {categorical_features.tolist()}")
 print(f"Identified Numerical Features: {numerical_features.tolist()}")
 
 # Create column transformer for preprocessing
-# - Numerical features → StandardScaler
-# - Categorical features → OneHotEncoder
 preprocessor = ColumnTransformer(
     transformers=[
         ('num', StandardScaler(), numerical_features),
         ('cat', OneHotEncoder(handle_unknown='ignore'), categorical_features)
     ]
 )
-print("\n⚙️ Preprocessing pipeline created successfully!")
+print("\nPreprocessing pipeline created successfully!")
 
 # 4. Define Model and Hyperparameter Search Space
-# Random Forest chosen for its robustness and performance on tabular data
 rf_model = RandomForestRegressor(random_state=42, n_jobs=-1)
 
 # Combine preprocessing and model into a single pipeline
@@ -116,7 +110,7 @@ random_search.fit(X_train, y_train)
 print("\nHyperparameter tuning complete!")
 
 # 6. Evaluate the Best Model
-print("\n🏆 Best Parameters Found:")
+print("\nBest Parameters Found:")
 print(random_search.best_params_)
 
 best_model = random_search.best_estimator_
@@ -129,4 +123,4 @@ with open('random_forest_model.pkl', 'wb') as file:
 
 print("\nFinal best model pipeline saved successfully as 'random_forest_model.pkl'!")
 
-print("\n🎯 Model training pipeline completed successfully!")
+print("\nModel training pipeline completed successfully!")
